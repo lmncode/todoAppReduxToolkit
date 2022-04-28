@@ -35,12 +35,6 @@ const todoSLice = createSlice({
       state.todos.forEach((todo) => {
         if (todo.id === action.payload) {
           todo.status = !todo.status;
-          state.todos = state.todos.filter(
-            (todo) => todo.id !== action.payload
-          );
-
-          if (todo.status) state.todos.push(todo);
-          else state.todos.unshift(todo);
         }
       });
     },
