@@ -1,7 +1,11 @@
-import React from 'react';
+import React from "react";
 
-const TodoItem = () => {
-
+interface IProps {
+  title: string;
 }
+
+const TodoItem = ({ title }: IProps) => {
+  return <li>{title}</li>;
+};
 
 export default TodoItem;
