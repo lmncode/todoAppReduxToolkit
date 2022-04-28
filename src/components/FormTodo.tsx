@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { v4 as uuid } from "uuid";
 import { addTodo } from "../features/todoSlice";
 
 const FormTodo = () => {
@@ -12,7 +13,7 @@ const FormTodo = () => {
 
     dispatch(
       addTodo({
-        id: "test",
+        id: uuid(),
         title: title,
         status: true,
       })

@@ -2,6 +2,7 @@ import React from "react";
 
 interface IProps {
   title: string;
+  id: string;
 }
 
 const TodoItem = ({ title }: IProps) => {
