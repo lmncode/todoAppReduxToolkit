@@ -1,5 +1,15 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+
+import {
+  ListItem,
+  ListItemText,
+  IconButton,
+  Checkbox,
+  ListItemIcon,
+} from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+
 import { removeTodo, updateTodoStatus } from "../features/todoSlice";
 
 interface IProps {
@@ -8,7 +18,7 @@ interface IProps {
   status: boolean;
 }
 
-const TodoItem = ({ title, id }: IProps) => {
+const TodoItem = ({ title, id, status }: IProps) => {
   const dispatch = useDispatch();
 
   const handleRemoveTodo = () => {
@@ -20,10 +30,30 @@ const TodoItem = ({ title, id }: IProps) => {
   };
 
   return (
-    <li>
-      <p onClick={handleUpdateStatus}>{title}</p>
-      <button onClick={handleRemoveTodo}>remove</button>
-    </li>
+    <>
+      <ListItem
+        color="secondary"
+        secondaryAction={
+          <IconButton edge="end" aria-label="delete" onClick={handleRemoveTodo}>
+            <DeleteIcon color="error" />
+          </IconButton>
+        }
+      >
+        <ListItemIcon>
+          <Checkbox
+            edge="start"
+            checked={status}
+            tabIndex={-1}
+            onChange={handleUpdateStatus}
+          />
+        </ListItemIcon>
+        {status ? (
+          <ListItemText secondary={title} />
+        ) : (
+          <ListItemText primary={title} />
+        )}
+      </ListItem>
+    </>
   );
 };
 

@@ -12,7 +12,13 @@ export interface ITodoItem {
 }
 
 const initialState: ITodos = {
-  todos: [],
+  todos: [
+    {
+      id: "task1",
+      title: "Task",
+      status: false,
+    },
+  ],
 };
 
 const todoSLice = createSlice({
@@ -20,14 +26,22 @@ const todoSLice = createSlice({
   initialState,
   reducers: {
     addTodo: (state, action: PayloadAction<ITodoItem>) => {
-      state.todos.push(action.payload);
+      state.todos.unshift(action.payload);
     },
     removeTodo: (state, action: PayloadAction<string>) => {
       state.todos = state.todos.filter((todo) => todo.id !== action.payload);
     },
     updateTodoStatus: (state, action: PayloadAction<string>) => {
-      state.todos.map((todo) => {
-        if (todo.id === action.payload) todo.status = !todo.status;
+      state.todos.forEach((todo) => {
+        if (todo.id === action.payload) {
+          todo.status = !todo.status;
+          state.todos = state.todos.filter(
+            (todo) => todo.id !== action.payload
+          );
+
+          if (todo.status) state.todos.push(todo);
+          else state.todos.unshift(todo);
+        }
       });
     },
   },
