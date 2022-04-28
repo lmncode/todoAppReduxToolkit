@@ -1,11 +1,12 @@
 import React from 'react';
+import FormTodo from './FormTodo';
 
 
 function App() {
   return (
-    <div className="App">
-      App
-    </div>
+   <>
+   <FormTodo/>
+   </>
   );
 }
 
