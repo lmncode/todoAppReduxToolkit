@@ -1,10 +1,11 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { removeTodo } from "../features/todoSlice";
+import { removeTodo, updateTodoStatus } from "../features/todoSlice";
 
 interface IProps {
   title: string;
   id: string;
+  status: boolean;
 }
 
 const TodoItem = ({ title, id }: IProps) => {
@@ -14,9 +15,13 @@ const TodoItem = ({ title, id }: IProps) => {
     dispatch(removeTodo(id));
   };
 
+  const handleUpdateStatus = () => {
+    dispatch(updateTodoStatus(id));
+  };
+
   return (
     <li>
-      <p>{title}</p>
+      <p onClick={handleUpdateStatus}>{title}</p>
       <button onClick={handleRemoveTodo}>remove</button>
     </li>
   );

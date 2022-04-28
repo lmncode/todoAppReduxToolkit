@@ -24,7 +24,7 @@ const FormTodo = () => {
   return (
     <form onSubmit={handleAddTodo}>
       <input
-        type={"text"}
+        type="text"
         value={title}
         onChange={(e) => {
           setTitle(e.target.value);
