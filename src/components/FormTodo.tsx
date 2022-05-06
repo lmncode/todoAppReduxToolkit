@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { v4 as uuid } from "uuid";
+import {useFormik} from 'formik'
 
 import { Button, Input } from "@mui/material";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
@@ -8,31 +9,32 @@ import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import { addTodo } from "../features/todoSlice";
 
 const FormTodo = () => {
-  const [title, setTitle] = useState("");
-  const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
-  const handleAddTodo = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!title) return;
+    const formik = useFormik({
+        initialValues: {
+            todoTitle:''
+        },
+        onSubmit:(values)=> {
+            dispatch(addTodo({
+            id:uuid(),
+            title:values.todoTitle,
+            status:false
+        }))
+        }
+    })
 
-    dispatch(
-      addTodo({
-        id: uuid(),
-        title: title,
-        status: false,
-      })
-    );
-    setTitle("");
-  };
+
 
   return (
-    <form onSubmit={handleAddTodo} style={{ marginBottom: "32px" }}>
+    <form onSubmit={formik.handleSubmit}>
       <Input
-        value={title}
+          id={"todoTitle"}
+          name={"todoTitle"}
+          type={"text"}
+        value={formik.values.todoTitle}
         style={{ height: "40px", width: "300px" }}
-        onChange={(e) => {
-          setTitle(e.target.value);
-        }}
+        onChange={formik.handleChange}
       />
 
       <Button
