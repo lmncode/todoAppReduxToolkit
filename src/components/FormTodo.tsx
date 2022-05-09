@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { v4 as uuid } from "uuid";
 import {useFormik} from 'formik'
+import * as Yup from 'yup';
 
-import { Button, Input } from "@mui/material";
+import { Button, Input, Typography } from "@mui/material";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 
 import { addTodo } from "../features/todoSlice";
+
+const validationSchema = Yup.object({
+    todoTitle: Yup.string().required('Title is required')
+})
 
 const FormTodo = () => {
     const dispatch = useDispatch();
@@ -21,10 +26,9 @@ const FormTodo = () => {
             title:values.todoTitle,
             status:false
         }))
-        }
+        },
+        validationSchema,
     })
-
-
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -35,7 +39,9 @@ const FormTodo = () => {
         value={formik.values.todoTitle}
         style={{ height: "40px", width: "300px" }}
         onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
       />
+        <Typography variant={'subtitle1'}>{(formik.touched.todoTitle && formik.errors.todoTitle)? formik.errors.todoTitle: null}</Typography>
 
       <Button
         variant="contained"
